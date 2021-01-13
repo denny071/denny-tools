@@ -1,3 +1,6 @@
+'''
+中文数组转阿拉伯数字
+'''
 import os
 import re
 from shutil import copyfile

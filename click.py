@@ -1,4 +1,7 @@
 #coding=utf-8
+'''
+点击腾讯新闻
+'''
 from selenium import webdriver
 import random
 import time

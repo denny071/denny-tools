@@ -3,6 +3,10 @@ import requests
 import sys
 import random
 
+'''
+抓大众点评
+'''
+
 def getcookiestr(path):
     '''
     path:配置文件路径
