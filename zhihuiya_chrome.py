@@ -309,12 +309,14 @@ url = "https://analytics.zhihuiya.com/"
 
 # 删除数据库，仅用于开发
 os.remove("static.db")
-
-browser = initChrome(url,proxy)
 # 创建数据库
 createDatabase()  
+# 初始化
+browser = initChrome(url,proxy)
+
+
 # 登录系统
-login(browser,"1020524731@qq.com","hengguan2021")
+login(browser,"******","******")
 company = "江西远东药业有限公司"
 # 查询页面
 query = "APD:[20160101 TO 20201231] AND ALL_AN:("+ company +")"
