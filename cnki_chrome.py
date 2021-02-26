@@ -43,7 +43,7 @@ def initDataPage(browser, url, school, year):
     randomWaiting("设置显示数量")
     setDataSort(browser)
     randomWaiting("读取数据")
-    recomand = recordData(school)
+    recomand = recordData(school, year)
     randomWaiting("下一页数据")
     autoRollPage(browser,school, year,recomand)
     
@@ -58,6 +58,7 @@ def createCnkiSchoolTable():
     c = conn.cursor()
     sql = "CREATE TABLE cnki_school (id integer PRIMARY KEY autoincrement,"
     sql += "school text not null,"
+    sql += "year text not null,"
     sql += "title text not null,"
     sql += "author text not null,"
     sql += "journal text not null,"
@@ -164,7 +165,7 @@ def autoRollPage(browser,school, year, recomand):
         try:
             browser.find_element_by_xpath('//*[@id="PageNext"]').click()
             randomWaiting("下一页")
-            recomand = recordData(school, recomand)
+            recomand = recordData(school, year, recomand)
         except:
             flag=False
             sql = "UPDATE cnki_school_static SET ";
@@ -178,7 +179,7 @@ def autoRollPage(browser,school, year, recomand):
             pass
     
 
-def recordData(school,recomand = 0):
+def recordData(school, year, recomand = 0):
     '''
     读取网络数据
     '''
@@ -192,24 +193,24 @@ def recordData(school,recomand = 0):
                 itemData.append(item.text)
         if itemData[-2] != '' and  int(itemData[-2]) > 9:
             recomand = recomand + 1
-        for author in itemData[2].split('; '):
-            authorSqlList.append("('" + school + "','" + author + "','" + itemData[1] + "')")
+        for author in itemData[2].split(';'):
+            authorSqlList.append("('" + school + "','" + author.strip() + "','[" + year + "]" + itemData[1] + "')")
         listData.append(itemData)
     authorSql = authorSql + ",".join(authorSqlList)
     debugLog("插入authorSql语句："+ authorSql)
     insertSql(authorSql)
     
-    makeInsertCnkiSchoolSql(school, listData)
+    makeInsertCnkiSchoolSql(school,year, listData)
     return recomand
  
-def makeInsertCnkiSchoolSql(school, listData):
+def makeInsertCnkiSchoolSql(school,year, listData):
     '''
     生成sql
     '''
-    sql = "INSERT INTO cnki_school (school,title,author,journal,publich_date,cited,download) VALUES "
+    sql = "INSERT INTO cnki_school (school,year,title,author,journal,publich_date,cited,download) VALUES "
     valueList = []
     for itemData in listData:
-        value = "('"+school+"','" + itemData[1]+ "','" + itemData[2]+ "','" + itemData[3]
+        value = "('"+school+"','" + year+ "','"+ itemData[1]+ "','" + itemData[2]+ "','" + itemData[3]
         value +=  "','" + itemData[4]+ "','" + itemData[5]+ "'," + itemData[6]+ ")" 
         valueList.append(value)
     sql = sql + ",".join(valueList)
@@ -239,7 +240,7 @@ def createTable():
 browser = initChrome()
 os.remove("static.db")
 createTable()
-initDataPage(browser,"https://kns.cnki.net/KNS8/AdvSearch?dbcode=SCDB","东软信息学院","2016")
+initDataPage(browser,"https://kns.cnki.net/KNS8/AdvSearch?dbcode=SCDB","大连工业大学","2019")
 
 
 
