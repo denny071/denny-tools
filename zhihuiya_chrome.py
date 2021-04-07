@@ -308,7 +308,7 @@ proxy = browserProxy()
 url = "https://analytics.zhihuiya.com/"
 
 # 删除数据库，仅用于开发
-os.remove("static.db")
+# os.remove("static.db")
 # 创建数据库
 createDatabase()  
 # 初始化

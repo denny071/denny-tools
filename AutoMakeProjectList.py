@@ -6,10 +6,9 @@ import json
 
 writeProjectJsonPath = "/Users/denny/Library/Application Support/Code/User/globalStorage/alefragnani.project-manager/projects.json"
 projectDirList = [
-    "/Users/denny/Documents/GitHub/",
-    "/Users/denny/Documents/Gitlab/",
-    "/Users/denny/Documents/Go/src/@go",
-    "/Users/denny/Documents/Python/",
+    "/Users/denny/Documents/gitHub/",
+    "/Users/denny/Documents/gitlab/",
+    "/Users/denny/Documents/go/src/@go",
     ]
  
 projectJson = []
